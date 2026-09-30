@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\UserController;
 
 
@@ -36,6 +37,10 @@ Route::group(['prefix'=>'auth'], function(){
     Route::post('/set-forgot-password', [AuthController::class, 'setForgotPassword']);
 });
 
+// Invoices API Routes
+Route::post('/invoices/insert-multi', [InvoiceController::class, 'insertMulti']);
+Route::post('/invoices/multi-insert', [InvoiceController::class, 'insertMulti']);
+
 Route::middleware('jwt.verify')->group(function() {
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
@@ -43,5 +48,7 @@ Route::middleware('jwt.verify')->group(function() {
     Route::post('/update-profile', [AuthController::class, 'updateProfile']);     
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::delete('/delete-account', [AuthController::class, 'deleteAccount']);
-    
+
+    Route::post('/auth/invoices/insert-multi', [InvoiceController::class, 'insertMulti']);
 });
+
